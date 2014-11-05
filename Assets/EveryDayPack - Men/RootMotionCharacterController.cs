@@ -85,8 +85,8 @@ public class RootMotionCharacterController : MonoBehaviour
 		float throttle = 0f;
 		
 		// turning keys
-		if (Input.GetKey(KeyCode.A)) transform.Rotate(Vector3.down, turningSpeed*Time.deltaTime);
-		if (Input.GetKey(KeyCode.D)) transform.Rotate(Vector3.up, turningSpeed*Time.deltaTime);
+		if (turningLeft) transform.Rotate(Vector3.down, turningSpeed*Time.deltaTime);
+		if (turningRight) transform.Rotate(Vector3.up, turningSpeed*Time.deltaTime);
 		
 		// forward movement keys
 		// ensure that the locomotion animations always blend from idle to moving at the beginning of their cycles

@@ -12,12 +12,12 @@ public class Spawn : MonoBehaviour {
 	
 	List<KeyValuePair<Transform,Texture>> combinations;
 
-	List<KeyValuePair<Map.Area,int>> occupiedLocations;
+	List<KeyValuePair<Transform,int>> occupiedLocations;
 
 	// Use this for initialization
 	void Awake () {
 		combinations = new List<KeyValuePair<Transform, Texture>> ();
-		occupiedLocations = new List<KeyValuePair<Map.Area, int>> ();
+		occupiedLocations = new List<KeyValuePair<Transform, int>> ();
 
 		foreach (Texture t in maleTextures)
 						combinations.Add (new KeyValuePair<Transform, Texture> (male, t));
@@ -40,24 +40,16 @@ public class Spawn : MonoBehaviour {
 			return null;
 	}
 
-	public void SpawnInArea(Map.Area area){
-		Transform spawnPoints = GameObject.Find (area.ToString ()).transform.FindChild ("Spawn Points");
+	public void SpawnInArea(Transform area){
+		Transform spawnPoints = area.FindChild ("Spawn Points");
 		
 		int index = Mathf.FloorToInt (Random.value * spawnPoints.childCount);
 		
-		Vector3 offset = Vector3.zero;
-		if (occupiedLocations.Count (a => a.Key == area && a.Value == index) > 0) {
-			offset = Random.onUnitSphere;
-			offset.y = 0;
-			offset.Normalize ();
-		}
-		
-		GetComponent<Spawn> ().SpawnAtPosition (spawnPoints.GetChild (index).transform.position+offset/2);
-		occupiedLocations.Add (new KeyValuePair<Map.Area, int> (area, index));
+		SpawnAtSpawnPoint(area,index);
 	}
 	
-	public void SpawnAtSpawnPoint(Map.Area area,int index){
-		Transform spawnPoints = GameObject.Find (area.ToString ()).transform.FindChild ("Spawn Points");
+	public void SpawnAtSpawnPoint(Transform area,int index){
+		Transform spawnPoints = area.FindChild ("Spawn Points");
 
 		Vector3 offset = Vector3.zero;
 		if (occupiedLocations.Count (a => a.Key == area && a.Value == index) > 0) {
@@ -67,7 +59,7 @@ public class Spawn : MonoBehaviour {
 		}
 		
 		GetComponent<Spawn> ().SpawnAtPosition (spawnPoints.GetChild (index).transform.position+offset/2);
-		occupiedLocations.Add (new KeyValuePair<Map.Area, int> (area, index));
+		occupiedLocations.Add (new KeyValuePair<Transform, int> (area, index));
 	}
 
 	// Update is called once per frame

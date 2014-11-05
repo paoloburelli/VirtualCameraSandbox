@@ -7,8 +7,8 @@ public class SandboxManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		GetComponent<Spawn>().SpawnInArea (Map.Area.House);
-		GetComponent<Spawn>().SpawnInArea (Map.Area.House);
+		GetComponent<Spawn>().SpawnInArea (GameObject.Find ("House").transform);
+		GetComponent<Spawn>().SpawnInArea (GameObject.Find ("House").transform);
 	}
 
 	
