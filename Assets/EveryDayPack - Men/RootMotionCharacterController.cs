@@ -4,7 +4,7 @@ using System.Collections;
 
 
 [AddComponentMenu("Mixamo/Demo/Root Motion Character")]
-public class RootMotionCharacterControlMENS : MonoBehaviour
+public class RootMotionCharacterController : MonoBehaviour
 {
 	public float turningSpeed = 90f;
 	public RootMotionComputer computer;
