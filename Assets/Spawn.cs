@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
+[RequireComponent (typeof (Map))]
 public class Spawn : MonoBehaviour {
 
 	public Transform male;
@@ -25,32 +26,13 @@ public class Spawn : MonoBehaviour {
 		foreach (Texture t in femaleTextures)
 			combinations.Add (new KeyValuePair<Transform, Texture> (female, t));
 	}
-
-	public Transform SpawnAtPosition(Vector3 position) {
-		if (combinations.Count > 0) 
-		{
-			int i = Mathf.FloorToInt (Random.value * combinations.Count);
-			KeyValuePair<Transform,Texture> c = combinations [i];
-			combinations.RemoveAt (i);
-
-			Transform t = Instantiate (c.Key, position, Quaternion.identity) as Transform;
-			t.FindChild("Hips").renderer.material.SetTexture("_MainTex",c.Value);
-			return t;
-		} else
-			return null;
-	}
-
+	
 	public void SpawnInArea(Transform area){
-		Transform spawnPoints = area.FindChild ("Spawn Points");
-		
-		int index = Mathf.FloorToInt (Random.value * spawnPoints.childCount);
-		
+		int index = Mathf.FloorToInt (Random.value * GetComponent<Map>().GetSpwanPoints(area).Length);
 		SpawnAtSpawnPoint(area,index);
 	}
 	
 	public void SpawnAtSpawnPoint(Transform area,int index){
-		Transform spawnPoints = area.FindChild ("Spawn Points");
-
 		Vector3 offset = Vector3.zero;
 		if (occupiedLocations.Count (a => a.Key == area && a.Value == index) > 0) {
 						offset = Random.onUnitSphere;
@@ -58,8 +40,22 @@ public class Spawn : MonoBehaviour {
 						offset.Normalize ();
 		}
 		
-		GetComponent<Spawn> ().SpawnAtPosition (spawnPoints.GetChild (index).transform.position+offset/2);
+		SpawnAtPosition (GetComponent<Map>().GetSpwanPoints(area)[index]+offset/2);
 		occupiedLocations.Add (new KeyValuePair<Transform, int> (area, index));
+	}
+
+	public Transform SpawnAtPosition(Vector3 position) {
+		if (combinations.Count > 0) 
+		{
+			int i = Mathf.FloorToInt (Random.value * combinations.Count);
+			KeyValuePair<Transform,Texture> c = combinations [i];
+			combinations.RemoveAt (i);
+			
+			Transform t = Instantiate (c.Key, position, Quaternion.identity) as Transform;
+			t.FindChild("Hips").renderer.material.SetTexture("_MainTex",c.Value);
+			return t;
+		} else
+			return null;
 	}
 
 	// Update is called once per frame
