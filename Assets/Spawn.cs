@@ -27,21 +27,21 @@ public class Spawn : MonoBehaviour {
 			combinations.Add (new KeyValuePair<Transform, Texture> (female, t));
 	}
 	
-	public void SpawnInArea(Transform area){
+	public Transform SpawnInArea(Transform area){
 		int index = Mathf.FloorToInt (Random.value * GetComponent<Map>().GetSpwanPoints(area).Length);
-		SpawnAtSpawnPoint(area,index);
+		return SpawnAtSpawnPoint(area,index);
 	}
 	
-	public void SpawnAtSpawnPoint(Transform area,int index){
+	public Transform SpawnAtSpawnPoint(Transform area,int index){
 		Vector3 offset = Vector3.zero;
 		if (occupiedLocations.Count (a => a.Key == area && a.Value == index) > 0) {
 						offset = Random.onUnitSphere;
 						offset.y = 0;
 						offset.Normalize ();
 		}
-		
-		SpawnAtPosition (GetComponent<Map>().GetSpwanPoints(area)[index]+offset/2);
+
 		occupiedLocations.Add (new KeyValuePair<Transform, int> (area, index));
+		return SpawnAtPosition (GetComponent<Map>().GetSpwanPoints(area)[index]+offset/2);
 	}
 
 	public Transform SpawnAtPosition(Vector3 position) {

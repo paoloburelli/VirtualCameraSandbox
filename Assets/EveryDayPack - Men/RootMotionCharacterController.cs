@@ -1,6 +1,7 @@
 		
 using UnityEngine;
 using System.Collections;
+using System.Threading;
 
 
 [AddComponentMenu("Mixamo/Demo/Root Motion Character")]
@@ -10,9 +11,14 @@ public class RootMotionCharacterController : MonoBehaviour
 	public RootMotionComputer computer;
 	public CharacterController character;
 
-	public void MoveForward() {
+	public void MoveForward(float movementSpeed) {
 		Stop ();
 		startMovingForward = true;
+		this.MovementSpeed = movementSpeed;
+	}
+
+	public void MoveForward() {
+		MoveForward(1);
 	}
 	public void TurnLeft() {
 		Stop ();
@@ -47,6 +53,11 @@ public class RootMotionCharacterController : MonoBehaviour
 	private bool turningLeft = false;
 	private bool talk = false;
 	private bool laugh = false;
+
+	private Collider area;
+	private float MovementSpeed;
+
+	Vector3 pos,forw;
 	
 	void Start()
 	{
@@ -79,62 +90,113 @@ public class RootMotionCharacterController : MonoBehaviour
 		
 	}
 	
-	void Update()
+	void FixedUpdate()
 	{
-		float targetMovementWeight = 0f;
-		float throttle = 0f;
-		
-		// turning keys
-		if (turningLeft) transform.Rotate(Vector3.down, turningSpeed*Time.deltaTime);
-		if (turningRight) transform.Rotate(Vector3.up, turningSpeed*Time.deltaTime);
-		
-		// forward movement keys
-		// ensure that the locomotion animations always blend from idle to moving at the beginning of their cycles
-		if (startMovingForward && 
-			(animation["walk"].weight == 0f || animation["run"].weight == 0f))
-		{
-			animation["walk"].normalizedTime = 0f;
-			animation["run"].normalizedTime = 0f;
-			startMovingForward = false;
-			movingForward = true;
-		}
-		if (movingForward)
-		{
-			targetMovementWeight = 1f;
-		}
-		if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) throttle = 1f;
-				
-		// blend in the movement
+			float targetMovementWeight = 0f;
+			float throttle = 0f;
+			
+			// turning keys
+			if (turningLeft) transform.Rotate(Vector3.down, turningSpeed*Time.deltaTime);
+			if (turningRight) transform.Rotate(Vector3.up, turningSpeed*Time.deltaTime);
+			
+			// forward movement keys
+			// ensure that the locomotion animations always blend from idle to moving at the beginning of their cycles
+			if (startMovingForward && 
+				(animation["walk"].weight == 0f || animation["run"].weight == 0f))
+			{
+				animation["walk"].normalizedTime = 0f;
+				animation["run"].normalizedTime = 0f;
+				startMovingForward = false;
+				movingForward = true;
+			}
+			if (movingForward)
+			{
+				targetMovementWeight = MovementSpeed;
+			}
+			if (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)) throttle = 1f;
+					
+			// blend in the movement
 
-		animation.Blend("run", targetMovementWeight*throttle, 0.5f);
-		animation.Blend("walk", targetMovementWeight*(1f-throttle), 0.5f);
-		// synchronize timing of the footsteps
-		animation.SyncLayer(1);
-		
-		// all the other animations, such as punch, kick, attach, reaction, etc. go here
-//		if (Input.GetKeyDown(KeyCode.Alpha1)) animation.CrossFade("boredidle", 0.2f);
-//		if (Input.GetKeyDown(KeyCode.Alpha2)) animation.CrossFade("jog", 0.2f);
-		if (laugh) {
-						animation.CrossFade ("laugh", 0.2f);
-						laugh = false;
-				}
-//		if (Input.GetKeyDown(KeyCode.Alpha4)) animation.CrossFade("rally", 0.2f);
-//		if (Input.GetKeyDown(KeyCode.Alpha5)) animation.CrossFade("strutwalk", 0.2f);
-		if (talk) 
-		{
-			animation.CrossFade ("talk", 0.2f);
-			talk = false;
-		}
-		//if (Input.GetKeyDown(KeyCode.Alpha7)) animation.CrossFade("wave", 0.2f);
-		
-		
+			animation.Blend("run", targetMovementWeight*throttle, 0.5f);
+			animation.Blend("walk", targetMovementWeight*(1f-throttle), 0.5f);
+			// synchronize timing of the footsteps
+			animation.SyncLayer(1);
+			
+			// all the other animations, such as punch, kick, attach, reaction, etc. go here
+	//		if (Input.GetKeyDown(KeyCode.Alpha1)) animation.CrossFade("boredidle", 0.2f);
+	//		if (Input.GetKeyDown(KeyCode.Alpha2)) animation.CrossFade("jog", 0.2f);
+			if (laugh) {
+							animation.CrossFade ("laugh", 0.2f);
+							laugh = false;
+					}
+	//		if (Input.GetKeyDown(KeyCode.Alpha4)) animation.CrossFade("rally", 0.2f);
+	//		if (Input.GetKeyDown(KeyCode.Alpha5)) animation.CrossFade("strutwalk", 0.2f);
+			if (talk) 
+			{
+				animation.CrossFade ("talk", 0.2f);
+				talk = false;
+			}
+			//if (Input.GetKeyDown(KeyCode.Alpha7)) animation.CrossFade("wave", 0.2f);
+			
+			this.pos = transform.position;
+			this.forw = transform.forward;
+
+			if (area != null) {
+				Vector3 distance = transform.position - area.transform.position;
+
+				if ((distance.x > area.bounds.extents.x*1.2 || distance.z > area.bounds.extents.z*1.2) && movingForward)
+					AreaLimitReached(area.transform.position);
+			}
 	}
 	
 	void LateUpdate()
 	{
-		computer.ComputeRootMotion();
-		
-		// move the character using the computer's output
-		character.SimpleMove(transform.TransformDirection(computer.deltaPosition)/Time.deltaTime);
+		if (Time.timeScale == 1) {
+			computer.ComputeRootMotion();
+			
+			// move the character using the computer's output
+			character.SimpleMove(transform.TransformDirection(computer.deltaPosition)/Time.unscaledDeltaTime);
+		}
 	}
+	
+	void OnTriggerEnter(Collider other) {
+		this.area = other;
+	}
+
+	void OnTriggerExit(Collider other) {
+		AreaLimitReached(other.transform.position);
+	}
+	
+	void OnControllerColliderHit(ControllerColliderHit hit){
+		if (hit.moveDirection.normalized != Vector3.down && movingForward)
+			ObstacleHit(hit);
+	}
+
+	void AreaLimitReached (Vector3 areaCenter)
+	{
+		if (Random.value > 0.5) TurnLeft(); else TurnRight();
+		Thread t = new Thread(() => {
+			Vector3 relativePosition = (areaCenter-pos).normalized;
+
+			while (Vector3.Dot(forw,relativePosition) < 0.75f)
+				Thread.Sleep(r.Next(10,50));
+
+			MoveForward();
+		});
+		t.Start();
+	}
+
+	void ObstacleHit (ControllerColliderHit hit)
+	{
+		if (Random.value > 0.5) TurnLeft(); else TurnRight();
+		Thread t = new Thread(() => {
+			while (Vector3.Dot(forw,hit.normal) < 0)
+				Thread.Sleep(r.Next(10,100));
+
+			MoveForward();
+		});
+		t.Start();
+	}
+
+	System.Random r = new System.Random();
 }
