@@ -13,6 +13,7 @@
 /*.pidb
 /*.booproj
 *.meta
+*.app
 
 #Unity3D Generated File On Crash Reports
 sysinfo.txt
