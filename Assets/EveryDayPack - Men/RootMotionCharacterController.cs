@@ -148,7 +148,15 @@ public class RootMotionCharacterController : MonoBehaviour
 					AreaLimitReached(area.transform.position);
 			}
 	}
-	
+
+	void Update() {
+		if (Time.timeScale == 1) {
+			if (!animation.isPlaying)
+				animation.Play();
+		} else 
+			animation.Stop();
+	}
+
 	void LateUpdate()
 	{
 		if (Time.timeScale == 1) {

@@ -47,7 +47,11 @@ public class SandboxManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		if (Time.unscaledTime > 2)
+			Pause ();
 
+		if (Time.unscaledTime > 10)
+			UnPause ();
 	}
 }
 
