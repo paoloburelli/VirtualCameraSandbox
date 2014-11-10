@@ -1,3 +1,0 @@
-Improved random positioning
-Made a correct valid position estimator
-Orbit camera works with right button

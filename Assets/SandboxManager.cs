@@ -17,29 +17,8 @@ public class SandboxManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-		Transform t = GetComponent<Spawn>().SpawnInArea (GameObject.Find ("Forest").transform);
-		t.GetComponent<RootMotionCharacterController>().MoveForward();
-
-		t = GetComponent<Spawn>().SpawnInArea (GameObject.Find ("Forest").transform);
-		t.GetComponent<RootMotionCharacterController>().MoveForward();
-
-		t = GetComponent<Spawn>().SpawnInArea (GameObject.Find ("Forest").transform);
-		t.GetComponent<RootMotionCharacterController>().MoveForward();
-
-		t = GetComponent<Spawn>().SpawnInArea (GameObject.Find ("Forest").transform);
-		t.GetComponent<RootMotionCharacterController>().MoveForward();
-
-		t = GetComponent<Spawn>().SpawnInArea (GameObject.Find ("Forest").transform);
-		t.GetComponent<RootMotionCharacterController>().MoveForward();
-
-		t = GetComponent<Spawn>().SpawnInArea (GameObject.Find ("Forest").transform);
-		t.GetComponent<RootMotionCharacterController>().MoveForward();
-
-		t = GetComponent<Spawn>().SpawnInArea (GameObject.Find ("Forest").transform);
-		t.GetComponent<RootMotionCharacterController>().MoveForward();
-
-		t = GetComponent<Spawn>().SpawnInArea (GameObject.Find ("Forest").transform);
-		t.GetComponent<RootMotionCharacterController>().MoveForward();
+		Transform t = GetComponent<Spawn>().SpawnAtSpawnPoint (GameObject.Find ("Forest").transform,0,-Vector2.right);
+		t.GetComponent<RootMotionCharacterController>().Talk();
 
 	}
 
@@ -47,11 +26,11 @@ public class SandboxManager : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		if (Time.unscaledTime > 2)
-			Pause ();
-
-		if (Time.unscaledTime > 10)
-			UnPause ();
+//		if (Time.unscaledTime > 2)
+//			Pause ();
+//
+//		if (Time.unscaledTime > 10)
+//			UnPause ();
 	}
 }
 

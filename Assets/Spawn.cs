@@ -33,29 +33,42 @@ public class Spawn : MonoBehaviour {
 	}
 	
 	public Transform SpawnAtSpawnPoint(Transform area,int index){
-		Vector3 offset = Vector3.zero;
-		if (occupiedLocations.Count (a => a.Key == area && a.Value == index) > 0) {
-						offset = Random.onUnitSphere;
-						offset.y = 0;
-						offset.Normalize ();
-		}
-
-		occupiedLocations.Add (new KeyValuePair<Transform, int> (area, index));
-		return SpawnAtPosition (GetComponent<Map>().GetSpwanPoints(area)[index]+offset/2);
+		return SpawnAtSpawnPoint(area,index,Vector3.up);
 	}
 
-	public Transform SpawnAtPosition(Vector3 position) {
+	public Transform SpawnAtSpawnPoint(Transform area,int index,Vector2 front){
+		Vector3 offset = Vector3.zero;
+		if (occupiedLocations.Count (a => a.Key == area && a.Value == index) > 0) {
+			offset = Random.onUnitSphere;
+			offset.y = 0;
+			offset.Normalize ();
+		}
+		
+		occupiedLocations.Add (new KeyValuePair<Transform, int> (area, index));
+		return SpawnAtPosition (GetComponent<Map>().GetSpwanPoints(area)[index]+offset/2,front);
+	}
+
+	public Transform SpawnAtPosition(Vector3 position,Vector2 front) {
 		if (combinations.Count > 0) 
 		{
 			int i = Mathf.FloorToInt (Random.value * combinations.Count);
 			KeyValuePair<Transform,Texture> c = combinations [i];
 			combinations.RemoveAt (i);
-			
+
+
+
 			Transform t = Instantiate (c.Key, position, Quaternion.identity) as Transform;
+
+			t.rotation = Quaternion.FromToRotation(t.forward,new Vector3(front.x,t.forward.y,front.y));
+
 			t.FindChild("Hips").renderer.material.SetTexture("_MainTex",c.Value);
 			return t;
 		} else
 			return null;
+	}
+
+	public Transform SpawnAtPosition(Vector3 position) {
+		return SpawnAtPosition(position,Vector2.up);
 	}
 
 	// Update is called once per frame
