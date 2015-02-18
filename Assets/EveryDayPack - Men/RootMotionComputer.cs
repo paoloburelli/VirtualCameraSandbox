@@ -556,11 +556,11 @@ public class RootMotionComputer : MonoBehaviour
 	private void DrawDebug()
 	{	
 		// draw pelvis right axis
-		Debug.DrawRay(pelvis.position, pelvis.TransformDirection(pelvisRightAxis) * debugGizmoSize, Color.red);
+		//Debug.DrawRay(pelvis.position, pelvis.TransformDirection(pelvisRightAxis) * debugGizmoSize, Color.red);
 		
 		// draw root node axes
-		Debug.DrawRay(rootNode.position, rootNode.rotation * Vector3.forward * debugGizmoSize, Color.blue);
-		Debug.DrawRay(rootNode.position, rootNode.rotation * Vector3.right * debugGizmoSize, Color.red);
-		Debug.DrawRay(rootNode.position, rootNode.rotation * Vector3.up * debugGizmoSize, Color.green);
+		//Debug.DrawRay(rootNode.position, rootNode.rotation * Vector3.forward * debugGizmoSize, Color.blue);
+		//Debug.DrawRay(rootNode.position, rootNode.rotation * Vector3.right * debugGizmoSize, Color.red);
+		//Debug.DrawRay(rootNode.position, rootNode.rotation * Vector3.up * debugGizmoSize, Color.green);
 	}
 }
