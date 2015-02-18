@@ -22,6 +22,10 @@ public class SandboxManager : MonoBehaviour
 	{
 		Transform t = GetComponent<Spawn>().SpawnAtSpawnPoint (GameObject.Find ("Rocks").transform,0,-Vector2.right);
 		t.GetComponent<RootMotionCharacterController>().Talk();
+
+		Camera.main.GetComponent<Operator>().Shot = Resources.Load<Shot>("LongShot");
+		Camera.main.GetComponent<Operator>().SetSubjectTransform(0,t);
+		Camera.main.GetComponent<Operator>().SetSubjectCenter(0,Vector3.up);
 //
 //		shot = new Shot();
 //		shot.NumberOfSubjects = 1;
@@ -46,7 +50,7 @@ public class SandboxManager : MonoBehaviour
 //		foreach (Property p in shot.Properties) {
 //			Debug.Log(p.Type + ": " + p.Satisfaction);
 //		}
-//		Debug.Log ("Visibility: " + shot.Visibility);
+//		Debug.Log ("Visibility: " + shot.Visibility);	
 	}
 
 	

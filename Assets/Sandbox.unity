@@ -136,17 +136,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 135}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b8db1c37c7ae4fcdb963d3c237aee35, type: 3}
+  m_Script: {fileID: 11500000, guid: 28d1f10d0b0e84474ace9ea01c6c320f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MovementResponsiveness: .100000001
-  RotationResponsiveness: .100000001
+  MovementResponsiveness: .949999988
+  RotationResponsiveness: .949999988
   shot: {fileID: 0}
   subjectsTransform: []
-  subjectsCenter:
-  - {x: 0, y: .400000006, z: 0}
-  subjectsScale:
-  - {x: .200000003, y: .200000003, z: .200000003}
+  subjectsCenter: []
+  subjectsScale: []
 --- !u!45 &158
 Skybox:
   m_ObjectHideFlags: 0
