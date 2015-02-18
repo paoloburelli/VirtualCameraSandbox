@@ -20,8 +20,8 @@ public class SandboxManager : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-//		Transform t = GetComponent<Spawn>().SpawnAtSpawnPoint (GameObject.Find ("Rocks").transform,0,-Vector2.right);
-//		t.GetComponent<RootMotionCharacterController>().Talk();
+		Transform t = GetComponent<Spawn>().SpawnAtSpawnPoint (GameObject.Find ("Rocks").transform,0,-Vector2.right);
+		t.GetComponent<RootMotionCharacterController>().Talk();
 //
 //		shot = new Shot();
 //		shot.NumberOfSubjects = 1;
