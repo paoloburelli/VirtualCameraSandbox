@@ -3,7 +3,7 @@ using System.Collections;
 using System.Threading;
 
 [RequireComponent (typeof (Spawn))]
-public class SandboxDemo : MonoBehaviour
+public class CamOnDemo : MonoBehaviour
 {
 	public void Pause() {
 		Time.timeScale = 0;
@@ -27,7 +27,7 @@ public class SandboxDemo : MonoBehaviour
 		a.GetComponent<RootMotionCharacterController>().Talk();
 		b.GetComponent<RootMotionCharacterController>().Talk();
 
-		Camera.main.GetComponent<Operator>().SelectShot(
+		Camera.main.GetComponent<CameraOperator>().SelectShot(
 			Resources.Load<Shot>("TwoActors-OverTheShoulder"),
 			new Transform[]{
 				a.FindChild("Hips"),
@@ -52,13 +52,13 @@ public class SandboxDemo : MonoBehaviour
 
 	IEnumerator ChangeToA(float waitTime) {
 		yield return new WaitForSeconds(waitTime);
-		Camera.main.GetComponent<Operator>().SelectShot(Resources.Load<Shot>("OneActor-Follow"),new Transform[]{a.FindChild("Hips")});
+		Camera.main.GetComponent<CameraOperator>().SelectShot(Resources.Load<Shot>("OneActor-Follow"),new Transform[]{a.FindChild("Hips")});
 		StartCoroutine(ChangeToB(10));
 	}
 
 	IEnumerator ChangeToB(float waitTime) {
 		yield return new WaitForSeconds(waitTime);
-		Camera.main.GetComponent<Operator>().SelectShot(Resources.Load<Shot>("OneActor-Follow"),new Transform[]{b.FindChild("Hips")});
+		Camera.main.GetComponent<CameraOperator>().SelectShot(Resources.Load<Shot>("OneActor-Follow"),new Transform[]{b.FindChild("Hips")});
 		StartCoroutine(ChangeToA(10));
 	}
 
