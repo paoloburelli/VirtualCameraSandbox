@@ -219,7 +219,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 135}
   m_LocalRotation: {x: .707106829, y: 0, z: 0, w: .707106709}
-  m_LocalPosition: {x: 996.26709, y: 22.3499794, z: 1010.8894}
+  m_LocalPosition: {x: 1035.58716, y: 16.0730629, z: 1007.80933}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -7522,7 +7522,7 @@ GameObject:
   - 33: {fileID: 361108015}
   - 23: {fileID: 361108014}
   - 64: {fileID: 361108013}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: modern_bay_window_01_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11768,7 +11768,7 @@ GameObject:
   - 33: {fileID: 613289473}
   - 23: {fileID: 613289472}
   - 64: {fileID: 613289471}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: modern_bay_window_01_A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -21755,7 +21755,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1135628123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee6ba0a232e1345c08248ccaff1aa528, type: 3}
+  m_Script: {fileID: 11500000, guid: 736ec01ab836c41f187c5ec91afcba86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1137664776
@@ -25215,7 +25215,7 @@ GameObject:
   - 33: {fileID: 1315946201}
   - 23: {fileID: 1315946200}
   - 64: {fileID: 1315946199}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: modern_bay_window_01_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -25785,7 +25785,7 @@ GameObject:
   - 33: {fileID: 1349268294}
   - 23: {fileID: 1349268293}
   - 64: {fileID: 1349268292}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: modern_bay_window_01_C
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31459,7 +31459,7 @@ GameObject:
   - 33: {fileID: 1706474929}
   - 23: {fileID: 1706474928}
   - 64: {fileID: 1706474927}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: modern_window_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -35262,7 +35262,7 @@ GameObject:
   - 33: {fileID: 1908937111}
   - 23: {fileID: 1908937110}
   - 64: {fileID: 1908937109}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: modern_window_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36372,7 +36372,7 @@ GameObject:
   - 33: {fileID: 1962894524}
   - 23: {fileID: 1962894523}
   - 64: {fileID: 1962894522}
-  m_Layer: 2
+  m_Layer: 0
   m_Name: modern_window_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
