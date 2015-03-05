@@ -75,18 +75,18 @@ public class RootMotionCharacterController : MonoBehaviour
 		computer.Initialize();
 		
 		// set up properties for the animations
-		animation["weightshiftidle"].layer = 0; animation["weightshiftidle"].wrapMode = WrapMode.Loop;
-		animation["walk"].layer = 1; animation["walk"].wrapMode = WrapMode.Loop;
-		animation["run"].layer = 1; animation["run"].wrapMode = WrapMode.Loop;
-		animation["boredidle"].layer = 3; animation["boredidle"].wrapMode = WrapMode.Once;
-		animation["jog"].layer = 3; animation["jog"].wrapMode = WrapMode.Loop;
-		animation["laugh"].layer = 3; animation["laugh"].wrapMode = WrapMode.Once;
-		animation["rally"].layer = 3; animation["rally"].wrapMode = WrapMode.Once;
-		animation["strutwalk"].layer = 3; animation["strutwalk"].wrapMode = WrapMode.Loop;
-		animation["talk"].layer = 3; animation["talk"].wrapMode = WrapMode.Once;
-		animation["wave"].layer = 3; animation["wave"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["weightshiftidle"].layer = 0; GetComponent<Animation>()["weightshiftidle"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["walk"].layer = 1; GetComponent<Animation>()["walk"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["run"].layer = 1; GetComponent<Animation>()["run"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["boredidle"].layer = 3; GetComponent<Animation>()["boredidle"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["jog"].layer = 3; GetComponent<Animation>()["jog"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["laugh"].layer = 3; GetComponent<Animation>()["laugh"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["rally"].layer = 3; GetComponent<Animation>()["rally"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["strutwalk"].layer = 3; GetComponent<Animation>()["strutwalk"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["talk"].layer = 3; GetComponent<Animation>()["talk"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["wave"].layer = 3; GetComponent<Animation>()["wave"].wrapMode = WrapMode.Once;
 		
-		animation.Play("weightshiftidle");
+		GetComponent<Animation>().Play("weightshiftidle");
 		
 	}
 	
@@ -102,10 +102,10 @@ public class RootMotionCharacterController : MonoBehaviour
 			// forward movement keys
 			// ensure that the locomotion animations always blend from idle to moving at the beginning of their cycles
 			if (startMovingForward && 
-				(animation["walk"].weight == 0f || animation["run"].weight == 0f))
+				(GetComponent<Animation>()["walk"].weight == 0f || GetComponent<Animation>()["run"].weight == 0f))
 			{
-				animation["walk"].normalizedTime = 0f;
-				animation["run"].normalizedTime = 0f;
+				GetComponent<Animation>()["walk"].normalizedTime = 0f;
+				GetComponent<Animation>()["run"].normalizedTime = 0f;
 				startMovingForward = false;
 				movingForward = true;
 			}
@@ -117,23 +117,23 @@ public class RootMotionCharacterController : MonoBehaviour
 					
 			// blend in the movement
 
-			animation.Blend("run", targetMovementWeight*throttle, 0.5f);
-			animation.Blend("walk", targetMovementWeight*(1f-throttle), 0.5f);
+			GetComponent<Animation>().Blend("run", targetMovementWeight*throttle, 0.5f);
+			GetComponent<Animation>().Blend("walk", targetMovementWeight*(1f-throttle), 0.5f);
 			// synchronize timing of the footsteps
-			animation.SyncLayer(1);
+			GetComponent<Animation>().SyncLayer(1);
 			
 			// all the other animations, such as punch, kick, attach, reaction, etc. go here
 	//		if (Input.GetKeyDown(KeyCode.Alpha1)) animation.CrossFade("boredidle", 0.2f);
 	//		if (Input.GetKeyDown(KeyCode.Alpha2)) animation.CrossFade("jog", 0.2f);
 			if (laugh) {
-							animation.CrossFade ("laugh", 0.2f);
+							GetComponent<Animation>().CrossFade ("laugh", 0.2f);
 							laugh = false;
 					}
 	//		if (Input.GetKeyDown(KeyCode.Alpha4)) animation.CrossFade("rally", 0.2f);
 	//		if (Input.GetKeyDown(KeyCode.Alpha5)) animation.CrossFade("strutwalk", 0.2f);
 			if (talk) 
 			{
-				animation.CrossFade ("talk", 0.2f);
+				GetComponent<Animation>().CrossFade ("talk", 0.2f);
 				talk = false;
 			}
 			//if (Input.GetKeyDown(KeyCode.Alpha7)) animation.CrossFade("wave", 0.2f);
@@ -151,10 +151,10 @@ public class RootMotionCharacterController : MonoBehaviour
 
 	void Update() {
 		if (Time.timeScale == 1) {
-			if (!animation.isPlaying)
-				animation.Play();
+			if (!GetComponent<Animation>().isPlaying)
+				GetComponent<Animation>().Play();
 		} else 
-			animation.Stop();
+			GetComponent<Animation>().Stop();
 	}
 
 	void LateUpdate()

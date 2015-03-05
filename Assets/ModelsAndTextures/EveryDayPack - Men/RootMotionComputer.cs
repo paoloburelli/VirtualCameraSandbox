@@ -191,12 +191,12 @@ public class RootMotionComputer : MonoBehaviour
 		{
 			anim = gameObject.GetComponentInChildren(typeof(Animation)) as Animation;
 			if (anim == null) Debug.LogError("No animation component has been specified.", this);
-			else if (isDebugMode) Debug.LogWarning(string.Format("No animation component has been specified. Using the animation component on {0}.", gameObject.name), this);
+			//else if (isDebugMode) Debug.LogWarning(string.Format("No animation component has been specified. Using the animation component on {0}.", gameObject.name), this);
 		}
 		if (rootNode == null)
 		{
 			rootNode = transform;
-			if (isDebugMode) Debug.LogWarning(string.Format("No root object has been manually specified. Assuming that {0} is the root object to be moved.", gameObject.name), this);
+			//if (isDebugMode) Debug.LogWarning(string.Format("No root object has been manually specified. Assuming that {0} is the root object to be moved.", gameObject.name), this);
 		}
 		if (pelvis == null)
 		{
@@ -215,7 +215,7 @@ public class RootMotionComputer : MonoBehaviour
 				}
 			}
 			if (pelvis == null) Debug.LogError("No pelvis transform has been specified.", this);
-			else if (isDebugMode) Debug.LogWarning(string.Format("No pelvis object as been manually specified. Assuming that {0} is the pelvis object to track.", pelvis.name));
+			//else if (isDebugMode) Debug.LogWarning(string.Format("No pelvis object as been manually specified. Assuming that {0} is the pelvis object to track.", pelvis.name));
 		}
 		
 		// store whether or not the animation component is playing

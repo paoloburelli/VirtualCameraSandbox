@@ -61,7 +61,7 @@ public class Spawn : MonoBehaviour {
 
 			t.rotation = Quaternion.FromToRotation(t.forward,new Vector3(front.x,t.forward.y,front.y));
 
-			t.FindChild("Hips").renderer.material.SetTexture("_MainTex",c.Value);
+			t.FindChild("Hips").GetComponent<Renderer>().material.SetTexture("_MainTex",c.Value);
 			return t;
 		} else
 			return null;

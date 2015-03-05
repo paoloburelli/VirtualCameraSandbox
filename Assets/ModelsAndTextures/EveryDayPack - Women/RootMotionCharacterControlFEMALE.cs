@@ -27,15 +27,15 @@ public class RootMotionCharacterControlFEMALE: MonoBehaviour
 		computer.Initialize();
 		
 		// set up properties for the animations
-		animation["talking01"].layer = 0; animation["talking01"].wrapMode = WrapMode.Loop;
-		animation["sexywalk"].layer = 1; animation["sexywalk"].wrapMode = WrapMode.Loop;
-		animation["goofyrun"].layer = 1; animation["goofyrun"].wrapMode = WrapMode.Loop;
-		animation["femtoughwalk"].layer = 3; animation["femtoughwalk"].wrapMode = WrapMode.Loop;
-		animation["no"].layer = 3; animation["no"].wrapMode = WrapMode.Once;
-		animation["sassywalk"].layer = 3; animation["sassywalk"].wrapMode = WrapMode.Loop;
-		animation["standinggreeting"].layer = 3; animation["standinggreeting"].wrapMode = WrapMode.Once;
-		animation["talking02"].layer = 3; animation["talking02"].wrapMode = WrapMode.Once;
-		animation["tellsecret"].layer = 3; animation["tellsecret"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["talking01"].layer = 0; GetComponent<Animation>()["talking01"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["sexywalk"].layer = 1; GetComponent<Animation>()["sexywalk"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["goofyrun"].layer = 1; GetComponent<Animation>()["goofyrun"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["femtoughwalk"].layer = 3; GetComponent<Animation>()["femtoughwalk"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["no"].layer = 3; GetComponent<Animation>()["no"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["sassywalk"].layer = 3; GetComponent<Animation>()["sassywalk"].wrapMode = WrapMode.Loop;
+		GetComponent<Animation>()["standinggreeting"].layer = 3; GetComponent<Animation>()["standinggreeting"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["talking02"].layer = 3; GetComponent<Animation>()["talking02"].wrapMode = WrapMode.Once;
+		GetComponent<Animation>()["tellsecret"].layer = 3; GetComponent<Animation>()["tellsecret"].wrapMode = WrapMode.Once;
 		
 		//animation.Play("weightshiftidle");
 		
@@ -53,10 +53,10 @@ public class RootMotionCharacterControlFEMALE: MonoBehaviour
 		// forward movement keys
 		// ensure that the locomotion animations always blend from idle to moving at the beginning of their cycles
 		if (Input.GetKeyDown(KeyCode.W) && 
-			(animation["sexywalk"].weight == 0f || animation["run"].weight == 0f))
+			(GetComponent<Animation>()["sexywalk"].weight == 0f || GetComponent<Animation>()["run"].weight == 0f))
 		{
-			animation["sexywalk"].normalizedTime = 0f;
-			animation["goofyrun"].normalizedTime = 0f;
+			GetComponent<Animation>()["sexywalk"].normalizedTime = 0f;
+			GetComponent<Animation>()["goofyrun"].normalizedTime = 0f;
 		}
 		if (Input.GetKey(KeyCode.W))
 		{
@@ -66,18 +66,18 @@ public class RootMotionCharacterControlFEMALE: MonoBehaviour
 				
 		// blend in the movement
 
-		animation.Blend("goofyrun", targetMovementWeight*throttle, 0.5f);
-		animation.Blend("sexywalk", targetMovementWeight*(1f-throttle), 0.5f);
+		GetComponent<Animation>().Blend("goofyrun", targetMovementWeight*throttle, 0.5f);
+		GetComponent<Animation>().Blend("sexywalk", targetMovementWeight*(1f-throttle), 0.5f);
 		// synchronize timing of the footsteps
-		animation.SyncLayer(1);
+		GetComponent<Animation>().SyncLayer(1);
 		
 		// all the other animations, such as punch, kick, attach, reaction, etc. go here
-		if (Input.GetKeyDown(KeyCode.Alpha1)) animation.CrossFade("femtoughwalk", 0.2f);
-		if (Input.GetKeyDown(KeyCode.Alpha2)) animation.CrossFade("no", 0.2f);
-		if (Input.GetKeyDown(KeyCode.Alpha3)) animation.CrossFade("sassywalk", 0.2f);
-		if (Input.GetKeyDown(KeyCode.Alpha4)) animation.CrossFade("standinggreeting", 0.2f);
-		if (Input.GetKeyDown(KeyCode.Alpha5)) animation.CrossFade("talking02", 0.2f);
-		if (Input.GetKeyDown(KeyCode.Alpha6)) animation.CrossFade("tellsecret", 0.2f);
+		if (Input.GetKeyDown(KeyCode.Alpha1)) GetComponent<Animation>().CrossFade("femtoughwalk", 0.2f);
+		if (Input.GetKeyDown(KeyCode.Alpha2)) GetComponent<Animation>().CrossFade("no", 0.2f);
+		if (Input.GetKeyDown(KeyCode.Alpha3)) GetComponent<Animation>().CrossFade("sassywalk", 0.2f);
+		if (Input.GetKeyDown(KeyCode.Alpha4)) GetComponent<Animation>().CrossFade("standinggreeting", 0.2f);
+		if (Input.GetKeyDown(KeyCode.Alpha5)) GetComponent<Animation>().CrossFade("talking02", 0.2f);
+		if (Input.GetKeyDown(KeyCode.Alpha6)) GetComponent<Animation>().CrossFade("tellsecret", 0.2f);
 
 	}
 	
