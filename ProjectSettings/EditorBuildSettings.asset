@@ -11,3 +11,5 @@ EditorBuildSettings:
     path: Assets/Scenes/House.unity
   - enabled: 0
     path: Assets/Scenes/Rocks.unity
+  - enabled: 0
+    path: Assets/Scenes/Forest.unity

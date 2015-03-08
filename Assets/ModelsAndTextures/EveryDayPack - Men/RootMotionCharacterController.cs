@@ -199,7 +199,7 @@ public class RootMotionCharacterController : MonoBehaviour
 		if (Random.value > 0.5) TurnLeft(); else TurnRight();
 		Thread t = new Thread(() => {
 			while (Vector3.Dot(forw,hit.normal) < 0)
-				Thread.Sleep(r.Next(10,100));
+				Thread.Sleep(r.Next(5,50));
 
 			MoveForward();
 		});

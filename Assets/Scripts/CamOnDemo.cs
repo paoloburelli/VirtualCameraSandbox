@@ -36,13 +36,9 @@ public class CamOnDemo : MonoBehaviour
 
 		currentShotName = "TwoActors-OverTheShoulder";
 
-		Camera.main.GetComponent<CameraOperator>().SelectShot(
-			Resources.Load<Shot>(currentShotName),
-			new Transform[]{
-				a.FindChild("Hips"),
-				b.FindChild("Hips")
-			}
-		);
+		CameraOperator.OnMainCamera.SelectShot(Resources.Load<Shot>(currentShotName),
+		                                       CameraOperator.Transition.Cut,
+		                                       new Transform[]{a.FindChild("Center"),b.FindChild("Center")});
 
 		StartCoroutine(WalkAway(3));
 	}
@@ -64,7 +60,9 @@ public class CamOnDemo : MonoBehaviour
 		else
 			currentShotName = "OneActor-LeftSide";
 
-		Camera.main.GetComponent<CameraOperator>().SelectShot(Resources.Load<Shot>(currentShotName),new Transform[]{a.FindChild("Hips")},CameraOperator.Transition.Smooth);
+		CameraOperator.OnMainCamera.SelectShot(Resources.Load<Shot>(currentShotName),
+		                                       CameraOperator.Transition.Smooth,
+		                                       new Transform[]{a.FindChild("Center")});
 		StartCoroutine(ChangeToB(10));
 	}
 
@@ -75,7 +73,9 @@ public class CamOnDemo : MonoBehaviour
 		else
 			currentShotName = "OneActor-LongShot";
 
-		Camera.main.GetComponent<CameraOperator>().SelectShot(Resources.Load<Shot>(currentShotName),new Transform[]{b.FindChild("Hips")},CameraOperator.Transition.Cut);
+		CameraOperator.OnMainCamera.SelectShot(Resources.Load<Shot>(currentShotName),
+		                                       CameraOperator.Transition.Cut,
+		                                       new Transform[]{b.FindChild("Center")});
 		StartCoroutine(ChangeToA(10));
 	}
 
