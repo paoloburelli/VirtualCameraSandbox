@@ -137,9 +137,7 @@ MonoBehaviour:
   MovementResponsiveness: .949999988
   RotationResponsiveness: .949999988
   shot: {fileID: 0}
-  subjectsTransform: []
-  subjectsCenter: []
-  subjectsScale: []
+  actors: []
 --- !u!45 &158
 Skybox:
   m_ObjectHideFlags: 0

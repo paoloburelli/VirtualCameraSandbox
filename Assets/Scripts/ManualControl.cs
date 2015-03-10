@@ -16,6 +16,6 @@ public class ManualControl : MonoBehaviour {
 			GetComponent<CameraOperator>().Shot.GetProperty<VantageAngle>(0).DesiredHorizontalAngle += Input.GetAxis("Horizontal")*rotationSpeed;
 
 		if (GetComponent<CameraOperator>().Shot.GetProperty<ProjectionSize>(0) != null)
-			GetComponent<CameraOperator>().Shot.GetProperty<ProjectionSize>(0).DesiredValue *= 1+Input.GetAxis("Vertical")*zoomSpeed;
+			GetComponent<CameraOperator>().Shot.GetProperty<ProjectionSize>(0).DesiredSize *= 1+Input.GetAxis("Vertical")*zoomSpeed;
 	}
 }

@@ -14,9 +14,9 @@ public class CamOnDemo : MonoBehaviour
 	public void UnPause() {
 		Time.timeScale = 1;
 	}
-
-	Transform a,b;
+	
 	string currentShotName;
+	Actor a,b;
 
 	// Use this for initialization
 	void Start ()
@@ -25,30 +25,29 @@ public class CamOnDemo : MonoBehaviour
 		GetComponent<GUIText>().alignment = TextAlignment.Left;
 		GetComponent<GUIText>().anchor = TextAnchor.UpperLeft;
 
-		a = GetComponent<Spawn>().SpawnAtSpawnPoint (GetComponent<Map>().Areas[0],8,-Vector2.right);
-		b = GetComponent<Spawn>().SpawnAtSpawnPoint (GetComponent<Map>().Areas[0],8,-Vector2.right);
+		a = Actor.Create(GetComponent<Spawn>().SpawnAtSpawnPoint (GetComponent<Map>().Areas[0],8,-Vector2.right),PrimitiveType.Capsule,Vector3.up,new Vector3(.5f,.9f,.5f));
+		b = Actor.Create(GetComponent<Spawn>().SpawnAtSpawnPoint (GetComponent<Map>().Areas[0],8,-Vector2.right),PrimitiveType.Capsule,Vector3.up,new Vector3(.5f,.9f,.5f));
 
-		b.LookAt(a.position);
-		a.LookAt(b.position);
+		a.transform.LookAt(b.transform.position);
+		b.transform.LookAt(a.transform.position);
 
-		a.GetComponent<RootMotionCharacterController>().Talk();
-		b.GetComponent<RootMotionCharacterController>().Talk();
+		a.transform.GetComponent<RootMotionCharacterController>().Talk();
+		b.transform.GetComponent<RootMotionCharacterController>().Talk();
 
 		currentShotName = "TwoActors-OverTheShoulder";
 
 		CameraOperator.OnMainCamera.SelectShot(Resources.Load<Shot>(currentShotName),
 		                                       CameraOperator.Transition.Cut,
-		                                       new Transform[]{a.FindChild("Center"),b.FindChild("Center")});
+		                                       new Actor[]{a,b});
 
 		StartCoroutine(WalkAway(3));
 	}
 
 	IEnumerator WalkAway(float waitTime) {
 		yield return new WaitForSeconds(waitTime);
-		a.GetComponent<RootMotionCharacterController>().TurnLeft();
+		a.transform.GetComponent<RootMotionCharacterController>().TurnLeft();
 		yield return new WaitForSeconds(0.5f);
-
-		a.GetComponent<RootMotionCharacterController>().MoveForward();
+		a.transform.GetComponent<RootMotionCharacterController>().MoveForward();
 
 		StartCoroutine(ChangeToA(0));
 	}
@@ -60,9 +59,10 @@ public class CamOnDemo : MonoBehaviour
 		else
 			currentShotName = "OneActor-LeftSide";
 
+
 		CameraOperator.OnMainCamera.SelectShot(Resources.Load<Shot>(currentShotName),
 		                                       CameraOperator.Transition.Smooth,
-		                                       new Transform[]{a.FindChild("Center")});
+		                                       new Actor[]{a});
 		StartCoroutine(ChangeToB(10));
 	}
 
@@ -73,9 +73,10 @@ public class CamOnDemo : MonoBehaviour
 		else
 			currentShotName = "OneActor-LongShot";
 
+
 		CameraOperator.OnMainCamera.SelectShot(Resources.Load<Shot>(currentShotName),
 		                                       CameraOperator.Transition.Cut,
-		                                       new Transform[]{b.FindChild("Center")});
+		                                       new Actor[]{b});
 		StartCoroutine(ChangeToA(10));
 	}
 
