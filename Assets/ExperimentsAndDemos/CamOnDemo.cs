@@ -2,11 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Threading;
 
-[RequireComponent (typeof (Spawn))]
-[RequireComponent (typeof (Map))]
-[RequireComponent (typeof (GUIText))]
 public class CamOnDemo : MonoBehaviour
 {
+	public string Scene="Forest";
+
 	public void Pause() {
 		Time.timeScale = 0;
 	}
@@ -17,29 +16,42 @@ public class CamOnDemo : MonoBehaviour
 	
 	string currentShotName;
 	Actor a,b;
+	GameObject sandbox;
+	Spawn spawn;
+	Map map;
 
 	// Use this for initialization
 	void Start ()
 	{
-		transform.position = Vector3.up;
-		GetComponent<GUIText>().alignment = TextAlignment.Left;
-		GetComponent<GUIText>().anchor = TextAnchor.UpperLeft;
+		GetComponent<GUIText>().text = "Loading "+Scene+" Scene...";
+		Application.LoadLevel(Scene);
+	}
 
-		a = Actor.Create(GetComponent<Spawn>().SpawnAtSpawnPoint (GetComponent<Map>().Areas[0],8,-Vector2.right),PrimitiveType.Capsule,Vector3.up,new Vector3(.5f,.9f,.5f));
-		b = Actor.Create(GetComponent<Spawn>().SpawnAtSpawnPoint (GetComponent<Map>().Areas[0],8,-Vector2.right),PrimitiveType.Capsule,Vector3.up,new Vector3(.5f,.9f,.5f));
+	void OnLevelWasLoaded(int level) {
+		Destroy(GetComponent<GUIText>());
+		sandbox = GameObject.Find("Sandbox");
+		spawn = sandbox.GetComponent<Spawn>();
+		map = sandbox.GetComponent<Map>();
 
+		sandbox.transform.position = Vector3.up;
+		sandbox.GetComponent<GUIText>().alignment = TextAlignment.Left;
+		sandbox.GetComponent<GUIText>().anchor = TextAnchor.UpperLeft;
+		
+		a = Actor.Create(spawn.SpawnAtSpawnPoint (map.Areas[0],8,-Vector2.right),PrimitiveType.Capsule,Vector3.up,new Vector3(.5f,.9f,.5f));
+		b = Actor.Create(spawn.SpawnAtSpawnPoint (map.Areas[0],8,-Vector2.right),PrimitiveType.Capsule,Vector3.up,new Vector3(.5f,.9f,.5f));
+		
 		a.transform.LookAt(b.transform.position);
 		b.transform.LookAt(a.transform.position);
-
+		
 		a.transform.GetComponent<RootMotionCharacterController>().Talk();
 		b.transform.GetComponent<RootMotionCharacterController>().Talk();
-
+		
 		currentShotName = "TwoActors-OverTheShoulder";
-
+		
 		CameraOperator.OnMainCamera.SelectShot(Resources.Load<Shot>(currentShotName),
 		                                       CameraOperator.Transition.Cut,
 		                                       new Actor[]{a,b});
-
+		
 		StartCoroutine(WalkAway(3));
 	}
 
@@ -83,7 +95,12 @@ public class CamOnDemo : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
-		GetComponent<GUIText>().text = currentShotName;
+		if (sandbox != null)
+			sandbox.GetComponent<GUIText>().text = currentShotName;
+	}
+
+	void Awake() {
+		DontDestroyOnLoad(gameObject);
 	}
 }
 

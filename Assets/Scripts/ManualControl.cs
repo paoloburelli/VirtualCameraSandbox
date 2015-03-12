@@ -4,7 +4,7 @@ using System.Collections;
 public class ManualControl : MonoBehaviour {
 
 	float rotationSpeed = 2;
-	float zoomSpeed = 0.2f;
+	float zoomSpeed = 0.1f;
 
 	// Use this for initialization
 	void Start () {
