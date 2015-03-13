@@ -36,7 +36,7 @@ public class Spawn : MonoBehaviour {
 		return SpawnAtSpawnPoint(area,index,Vector3.up);
 	}
 
-	public Transform SpawnAtSpawnPoint(Transform area,int index,Vector2 front){
+	public Transform SpawnAtSpawnPoint(Transform area,int index,Vector2 front,int combinationIndex = -1){
 		Vector3 offset = Vector3.zero;
 		if (occupiedLocations.Count (a => a.Key == area && a.Value == index) > 0) {
 			offset = Random.onUnitSphere;
@@ -45,15 +45,19 @@ public class Spawn : MonoBehaviour {
 		}
 		
 		occupiedLocations.Add (new KeyValuePair<Transform, int> (area, index));
-		return SpawnAtPosition (GetComponent<Map>().GetSpwanPoints(area)[index]+offset/2,front);
+		return SpawnAtPosition (GetComponent<Map>().GetSpwanPoints(area)[index]+offset/2,front,combinationIndex);
 	}
 
-	public Transform SpawnAtPosition(Vector3 position,Vector2 front) {
+	public Transform SpawnAtPosition(Vector3 position,Vector2 front,int combinationIndex = -1) {
 		if (combinations.Count > 0) 
 		{
-			int i = Mathf.FloorToInt (Random.value * combinations.Count);
-			KeyValuePair<Transform,Texture> c = combinations [i];
-			combinations.RemoveAt (i);
+			KeyValuePair<Transform,Texture> c;
+			if (combinationIndex < 0 || combinationIndex >= combinations.Count) {
+				int i = Mathf.FloorToInt (Random.value * combinations.Count);
+				c = combinations [i];
+				combinations.RemoveAt (i);
+			} else
+				c = combinations[combinationIndex];
 
 
 
@@ -67,8 +71,8 @@ public class Spawn : MonoBehaviour {
 			return null;
 	}
 
-	public Transform SpawnAtPosition(Vector3 position) {
-		return SpawnAtPosition(position,Vector2.up);
+	public Transform SpawnAtPosition(Vector3 position,int combinationIndex = -1) {
+		return SpawnAtPosition(position,Vector2.up,combinationIndex);
 	}
 
 	// Update is called once per frame
